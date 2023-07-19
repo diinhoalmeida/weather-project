@@ -5,7 +5,7 @@ function Home() {
   return (
     <Flex
       width="100vw"
-      height={{ base: "max-content", md: "100vh" }}
+      minH={{ base: "max-content", md: "100vh" }}
       bgGradient="linear(to-b, #FF7F00, #FFBB00)"
       justifyContent="center"
       alignItems="center"
