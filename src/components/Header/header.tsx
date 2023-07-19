@@ -1,5 +1,6 @@
 import { Box, Flex, Input, Text } from "@chakra-ui/react";
 import { AiOutlineSearch } from "react-icons/ai";
+import { CardWeather } from "..";
 
 function Header() {
   return (
@@ -10,7 +11,7 @@ function Header() {
       paddingBottom={10}
       flexDirection="column"
       alignItems="center"
-      gap={50}
+      gap={42}
     >
       <Text
         textAlign={{ base: "left", md: "center" }}
@@ -20,6 +21,7 @@ function Header() {
       >
         Previsão do tempo
       </Text>
+      {true && <CardWeather />}
       <Box
         bgColor="gray.300"
         rounded="lg"
