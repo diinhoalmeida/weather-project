@@ -24,5 +24,6 @@ module.exports = {
     ],
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/no-misused-promises": "off",
+    "react-hooks/exhaustive-deps": "off",
   },
 };

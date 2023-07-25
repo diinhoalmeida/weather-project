@@ -1,4 +1,3 @@
-// components/Header/WeatherTitle.tsx
 import { Flex, Text } from "@chakra-ui/react";
 import { AiFillInstagram } from "react-icons/ai";
 
