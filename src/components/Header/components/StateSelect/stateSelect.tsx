@@ -1,4 +1,3 @@
-// components/Header/StateSelect.tsx
 import { Select } from "@chakra-ui/react";
 import { ChangeEvent } from "react";
 import { GeonameProps } from "../../../../interfaces/geoname";

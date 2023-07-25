@@ -1,4 +1,3 @@
-// components/Header/WeatherSearch.tsx
 import {
   Box,
   Button,
@@ -9,30 +8,29 @@ import {
   UnorderedList,
 } from "@chakra-ui/react";
 import { AiOutlineSearch } from "react-icons/ai";
-import { ChangeEvent, FormEvent, useRef, useEffect } from "react";
-import { GeonameProps } from "../../../../interfaces/geoname";
-
-interface WeatherSearchProps {
-  statesList: GeonameProps[];
-  citysList: GeonameProps[];
-  onCityChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  onCitySubmit: (event: FormEvent<HTMLFormElement>) => void;
-  onCitySelect: (citySelected: string) => void;
-  cityName: string;
-  citysSugestions: boolean;
-  selectedItemIndex: number;
-  handleKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void;
-}
+import { useRef, useEffect } from "react";
+import { handleWeatherData } from "../../../../services/weatherApi";
+import {
+  handleKeyDown,
+  handleSelectCityWithClick,
+  handleWeatherByCity,
+} from "../../utils/cityActions";
+import { WeatherSearchProps } from "../../interfaces/weatherSearchProps";
 
 function WeatherSearch({
   citysList,
-  onCityChange,
   onCitySubmit,
+  setCityName,
+  setSelectedItemIndex,
+  setCitysSugestions,
+  setWeatherData,
   citysSugestions,
-  onCitySelect,
+  copyCitysList,
+  countryName,
+  stateName,
+  setCopyCitysList,
   cityName,
   selectedItemIndex,
-  handleKeyDown,
 }: WeatherSearchProps) {
   const listRef = useRef<HTMLUListElement>(null);
 
@@ -66,8 +64,31 @@ function WeatherSearch({
               bgColor="transparent"
               p={2}
               borderColor="transparent"
-              onChange={onCityChange}
-              onKeyDown={handleKeyDown}
+              onChange={(event) =>
+                handleWeatherByCity({
+                  event,
+                  citysList,
+                  setCityName,
+                  setCitysSugestions,
+                  setCopyCitysList,
+                })
+              }
+              onKeyDown={(event) =>
+                handleKeyDown({
+                  event,
+                  selectedItemIndex,
+                  setCitysSugestions,
+                  setSelectedItemIndex,
+                  copyCitysList,
+                  setCityName,
+                  handleSelectCityWithClick,
+                  cityName,
+                  countryName,
+                  stateName,
+                  handleWeatherData,
+                  setWeatherData,
+                })
+              }
               focusBorderColor="transparent"
               type="text"
               placeholder="Insira o nome da cidade"
@@ -97,7 +118,7 @@ function WeatherSearch({
           scrollBehavior="smooth"
           overflowY="scroll"
         >
-          {citysList?.map((item, index) => (
+          {copyCitysList?.map((item, index) => (
             <ListItem
               key={index}
               w="full"
@@ -106,7 +127,12 @@ function WeatherSearch({
               _hover={{ backgroundColor: "gray.200", cursor: "pointer" }}
               bg={index === selectedItemIndex ? "gray.200" : "transparent"}
               rounded="lg"
-              onClick={() => onCitySelect(item.toponymName)}
+              onClick={() =>
+                handleSelectCityWithClick({
+                  citySelected: item.toponymName,
+                  setCityName,
+                })
+              }
             >
               {item.toponymName}
             </ListItem>

@@ -1,7 +1,20 @@
 import { Box } from "@chakra-ui/react";
 import { Forecast, Location, Temperature, WeatherInfo } from "./components";
+import { WeatherData } from "../../interfaces/weatherApi";
 
-const CardWeather = () => {
+interface CardWeatherProps {
+  weatherData: WeatherData;
+  abreviationState: string;
+  countryName: string;
+  cityName: string;
+}
+
+const CardWeather = ({
+  weatherData,
+  cityName,
+  abreviationState,
+  countryName,
+}: CardWeatherProps) => {
   return (
     <Box padding={10} h="max-content" bgColor="#FFF2E4">
       <Box w="full" color="#505050">
@@ -14,7 +27,11 @@ const CardWeather = () => {
           paddingBottom="5"
         >
           <Box>
-            <Location />
+            <Location
+              abreviationState={abreviationState}
+              countryName={countryName}
+              cityName={cityName}
+            />
             <Temperature />
             <WeatherInfo />
           </Box>
