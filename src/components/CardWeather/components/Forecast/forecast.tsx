@@ -1,35 +1,53 @@
-import { Flex } from "@chakra-ui/react";
+import { Box, Flex, Grid } from "@chakra-ui/react";
 import ForecastItem from "../ForecastItem/forecastItem";
+import { ForecastDayPropsArrayProps } from "../../../../interfaces/weatherApi";
+import { formatDateToDDMM } from "../../../../utils/dateFormat";
+import { useEffect, useState } from "react";
 
-const Forecast = () => {
-  const forecastData = [
-    { day: "Segunda", minTemp: 18, maxTemp: 26 },
-    { day: "Terça", minTemp: 18, maxTemp: 26 },
-    { day: "Quarta", minTemp: 18, maxTemp: 26 },
-    { day: "Quinta", minTemp: 18, maxTemp: 26 },
-    { day: "Sexta", minTemp: 18, maxTemp: 26 },
-    { day: "Sábado", minTemp: 18, maxTemp: 26 },
-    { day: "Domingo", minTemp: 18, maxTemp: 26 },
-  ];
+interface ForecastProps {
+  forecastDay: ForecastDayPropsArrayProps[];
+}
+
+interface ForecastDataMoldedProps {
+  day: string;
+  minTemp: number;
+  maxTemp: number;
+}
+
+const Forecast = ({ forecastDay }: ForecastProps) => {
+  const [forecastData, setForecastData] = useState<ForecastDataMoldedProps[]>();
+
+  useEffect(() => {
+    teste();
+  }, [forecastDay]);
+
+  const teste = () => {
+    const forecastDataMolded = forecastDay?.map((item) => ({
+      day: item.date,
+      minTemp: item.day.mintemp_c,
+      maxTemp: item.day.maxtemp_c,
+    }));
+    console.log("q", forecastDataMolded);
+    setForecastData(forecastDataMolded);
+  };
 
   return (
-    <Flex
-      flexWrap="wrap"
-      paddingLeft={5}
-      paddingRight={5}
-      alignItems="center"
-      paddingTop={5}
-      maxW="full"
-      gap={3}
-    >
-      {forecastData.map((item, index) => (
-        <ForecastItem
-          key={index}
-          day={item.day}
-          minTemp={item.minTemp}
-          maxTemp={item.maxTemp}
-        />
-      ))}
+    <Flex marginTop={5} w="full" justifyItems="flex-end" gap={3}>
+      <Flex
+        flexDirection="row"
+        flexWrap="wrap"
+        gap={2}
+        justifyContent={{ base: "center", md: "flex-start" }}
+      >
+        {forecastData?.map((item, index) => (
+          <ForecastItem
+            key={index}
+            day={formatDateToDDMM(item?.day)}
+            minTemp={item?.minTemp}
+            maxTemp={item?.maxTemp}
+          />
+        ))}
+      </Flex>
     </Flex>
   );
 };

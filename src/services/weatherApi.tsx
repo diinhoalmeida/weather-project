@@ -9,9 +9,11 @@ const handleWeatherData = async (
     url: "http://api.weatherapi.com/v1/forecast.json?key=bed0d7cb6f574708b6e140054232007",
     params: {
       q: citySelected,
-      days: 7,
+      days: 14,
       aqi: "no",
       alerts: "no",
+      lang: "pt",
+      forecastday: "day",
     },
     headers: {
       "X-RapidAPI-Host": "weatherapi-com.p.rapidapi.com",

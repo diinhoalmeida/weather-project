@@ -10,7 +10,12 @@ function Home() {
       justifyContent="center"
       alignItems="center"
     >
-      <Flex alignItems="center" padding={10} flexDirection="column">
+      <Flex
+        alignItems="center"
+        padding={10}
+        flexDirection="column"
+        w={{ base: "750px" }}
+      >
         <Header />
         <Flex flexDirection="column" width={{ base: "full", md: "95%" }}>
           <Text fontWeight="bold" color="whiteAlpha.900" fontSize="4xl">

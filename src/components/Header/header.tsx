@@ -22,6 +22,7 @@ function Header() {
   const [countryGeonameId, setCountryGeonameId] = useState<number>(3469034);
   const [weatherData, setWeatherData] = useState<WeatherData>();
   const [citysSugestions, setCitysSugestions] = useState<boolean>(false);
+  const [openCardWeather, setOpenCardWeather] = useState<boolean>(false);
 
   useEffect(() => {
     loadStatesByCountry(countryGeonameId)
@@ -66,11 +67,12 @@ function Header() {
 
   const handleSubmitWeatherData = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const weatherCall = await handleWeatherData(
+    await handleWeatherData(
       `${cityName} ${countryName} ${stateName ? stateName : ""}`
-    );
-    console.log(weatherCall);
-    setWeatherData(weatherCall);
+    ).then((weatherCallReturn) => {
+      setOpenCardWeather(true);
+      setWeatherData(weatherCallReturn);
+    });
   };
 
   return (
@@ -84,10 +86,12 @@ function Header() {
       gap={35}
     >
       <WeatherTitle />
-      {true && (
+      {openCardWeather && (
         <CardWeather
           weatherData={weatherData as WeatherData}
           abreviationState={abreviationState}
+          setOpenCardWeather={setOpenCardWeather}
+          openCardWeather={openCardWeather}
           countryName={countryName}
           cityName={cityName}
         />
