@@ -19,6 +19,7 @@ import { WeatherSearchProps } from "../../interfaces/weatherSearchProps";
 
 function WeatherSearch({
   citysList,
+  setOpenCardWeather,
   onCitySubmit,
   setCityName,
   setSelectedItemIndex,
@@ -28,6 +29,7 @@ function WeatherSearch({
   copyCitysList,
   countryName,
   stateName,
+  setLoadingWeatherCall,
   setCopyCitysList,
   cityName,
   selectedItemIndex,
@@ -49,56 +51,57 @@ function WeatherSearch({
   return (
     <Flex flexDirection="column" width="full" position="relative">
       <form onSubmit={onCitySubmit}>
-        <FormControl>
-          <Box
-            bgColor="white"
-            rounded="lg"
-            height="50px"
-            display="flex"
-            borderColor="#FF7F00"
-            alignItems="center"
-            px={2}
-          >
-            <Input
-              value={cityName}
-              bgColor="transparent"
-              p={2}
-              borderColor="transparent"
-              onChange={(event) =>
-                handleWeatherByCity({
-                  event,
-                  citysList,
-                  setCityName,
-                  setCitysSugestions,
-                  setCopyCitysList,
-                })
-              }
-              onKeyDown={(event) =>
-                handleKeyDown({
-                  event,
-                  selectedItemIndex,
-                  setCitysSugestions,
-                  setSelectedItemIndex,
-                  copyCitysList,
-                  setCityName,
-                  handleSelectCityWithClick,
-                  cityName,
-                  countryName,
-                  stateName,
-                  handleWeatherData,
-                  setWeatherData,
-                })
-              }
-              focusBorderColor="transparent"
-              type="text"
-              placeholder="Insira o nome da cidade"
-              autoComplete="off"
-            />
-            <Button type="submit">
-              <AiOutlineSearch size={25} />
-            </Button>
-          </Box>
-        </FormControl>
+        <Box
+          bgColor="white"
+          rounded="lg"
+          height="50px"
+          display="flex"
+          borderColor="#FF7F00"
+          alignItems="center"
+          px={2}
+        >
+          <Input
+            value={cityName}
+            bgColor="transparent"
+            p={2}
+            borderColor="transparent"
+            onChange={(event) => {
+              handleWeatherByCity({
+                event,
+                citysList,
+                setCityName,
+                setCitysSugestions,
+                setCopyCitysList,
+              });
+              setOpenCardWeather(false);
+            }}
+            onKeyDown={(event) =>
+              handleKeyDown({
+                event,
+                setLoadingWeatherCall,
+                selectedItemIndex,
+                setCitysSugestions,
+                setOpenCardWeather,
+                setSelectedItemIndex,
+                copyCitysList,
+                setCityName,
+                handleSelectCityWithClick,
+                cityName,
+                countryName,
+                stateName,
+                handleWeatherData,
+                setWeatherData,
+              })
+            }
+            focusBorderColor="transparent"
+            type="text"
+            placeholder="Insira o nome da cidade"
+            autoComplete="off"
+          />
+          <Button type="submit">
+            <AiOutlineSearch size={25} />
+          </Button>
+        </Box>
       </form>
       {citysList && cityName.length > 0 && citysSugestions && (
         <UnorderedList
@@ -127,12 +130,14 @@ function WeatherSearch({
               _hover={{ backgroundColor: "gray.200", cursor: "pointer" }}
               bg={index === selectedItemIndex ? "gray.200" : "transparent"}
               rounded="lg"
-              onClick={() =>
+              onClick={() => {
                 handleSelectCityWithClick({
                   citySelected: item.toponymName,
                   setCityName,
-                })
-              }
+                  setSelectedItemIndex,
+                });
+                setCitysSugestions(false);
+              }}
             >
               {item.toponymName}
             </ListItem>

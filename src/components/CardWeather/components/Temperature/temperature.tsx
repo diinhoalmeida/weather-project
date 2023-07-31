@@ -12,11 +12,11 @@ const Temperature = ({ minTemp, maxTemp, windVelocity }: TemperatureProps) => {
     <Flex flexDirection="column">
       <Flex flexDirection="row" gap={2}>
         <Flex flexDirection="row" alignItems="center">
-          <AiOutlineArrowUp style={{ color: "#FF9A00" }} />
+          <AiOutlineArrowDown style={{ color: "#FF9A00" }} />
           <Text fontWeight="semibold">{Math.floor(minTemp)}º</Text>
         </Flex>
         <Flex flexDirection="row" alignItems="center">
-          <AiOutlineArrowDown style={{ color: "#FF9A00" }} />
+          <AiOutlineArrowUp style={{ color: "#FF9A00" }} />
           <Text fontWeight="semibold">{Math.floor(maxTemp)}º</Text>
         </Flex>
       </Flex>

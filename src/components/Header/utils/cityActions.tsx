@@ -47,8 +47,10 @@ export const handleWeatherByCity = ({
 export const handleSelectCityWithClick = ({
   citySelected,
   setCityName,
+  setSelectedItemIndex,
 }: HandleSelectCityWithClick): void => {
   setCityName(citySelected);
+  setSelectedItemIndex(-1);
 };
 
 export const handleKeyDown = async ({
@@ -58,10 +60,12 @@ export const handleKeyDown = async ({
   setSelectedItemIndex,
   copyCitysList,
   setCityName,
+  setOpenCardWeather,
   handleSelectCityWithClick,
   cityName,
   countryName,
   stateName,
+  setLoadingWeatherCall,
   handleWeatherData,
   setWeatherData,
 }: HandleKeyDownProps): Promise<void> => {
@@ -83,12 +87,20 @@ export const handleKeyDown = async ({
     if (selectedItemIndex >= 0) {
       const selectedCity = copyCitysList[selectedItemIndex].toponymName;
       setCitysSugestions(false);
-      handleSelectCityWithClick({ citySelected: selectedCity, setCityName });
-      setSelectedItemIndex(-1);
+      handleSelectCityWithClick({
+        citySelected: selectedCity,
+        setCityName,
+        setSelectedItemIndex,
+      });
     } else {
+      setLoadingWeatherCall(true);
       const weatherCall = await handleWeatherData(
         `${cityName} ${countryName} ${stateName ? stateName : ""}`
-      );
+      ).then((weatherCallReturn) => {
+        setLoadingWeatherCall(false);
+        return weatherCallReturn;
+      });
+      setOpenCardWeather(true);
       setWeatherData(weatherCall);
     }
   }

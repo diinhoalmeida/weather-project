@@ -1,5 +1,5 @@
 import { Flex } from "@chakra-ui/react";
-import { CardWeather } from "..";
+import { CardWeather, LoadingScreen } from "..";
 
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { handleWeatherData } from "../../services/weatherApi";
@@ -23,6 +23,7 @@ function Header() {
   const [weatherData, setWeatherData] = useState<WeatherData>();
   const [citysSugestions, setCitysSugestions] = useState<boolean>(false);
   const [openCardWeather, setOpenCardWeather] = useState<boolean>(false);
+  const [loadingWeatherCall, setLoadingWeatherCall] = useState<boolean>(false);
 
   useEffect(() => {
     loadStatesByCountry(countryGeonameId)
@@ -35,19 +36,30 @@ function Header() {
   }, []);
 
   useEffect(() => {
+    setLoadingWeatherCall(true);
     if (stateGeonameId) {
       handleLoadCitysByState()
         .then(() => {
+          setLoadingWeatherCall(false);
           // Tratamento em caso de sucesso
         })
         .catch((error) => {
           console.error(error);
         });
+      return;
     }
+    setLoadingWeatherCall(false);
   }, [stateGeonameId]);
 
   const handleLoadCitysByState = async () => {
-    const listCityByState = await handleLocationsByGeonameId(stateGeonameId);
+    setLoadingWeatherCall(true);
+    const listCityByState = await handleLocationsByGeonameId(
+      stateGeonameId
+    ).then((listCityByStateReturn) => {
+      console.log("entrou na cidade");
+      setLoadingWeatherCall(false);
+      return listCityByStateReturn;
+    });
     setCopyCitysList(listCityByState);
     setCitysList(listCityByState);
   };
@@ -62,14 +74,19 @@ function Header() {
     setAbreviationState(stateSelected.adminCodes1.ISO3166_2);
     setCountryName(stateSelected.countryName);
     const stateName = event.target.options[selectedIndex].text;
+    setCitysSugestions(false);
+    setOpenCardWeather(false);
     setStateName(stateName);
   };
 
   const handleSubmitWeatherData = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setLoadingWeatherCall(true);
     await handleWeatherData(
       `${cityName} ${countryName} ${stateName ? stateName : ""}`
     ).then((weatherCallReturn) => {
+      setLoadingWeatherCall(false);
+      setCitysSugestions(false);
       setOpenCardWeather(true);
       setWeatherData(weatherCallReturn);
     });
@@ -85,21 +102,23 @@ function Header() {
       alignItems="center"
       gap={35}
     >
+      {loadingWeatherCall && <LoadingScreen />}
       <WeatherTitle />
       {openCardWeather && (
         <CardWeather
           weatherData={weatherData as WeatherData}
           abreviationState={abreviationState}
           setOpenCardWeather={setOpenCardWeather}
-          openCardWeather={openCardWeather}
           countryName={countryName}
           cityName={cityName}
         />
       )}
       <StateSelect statesList={statesList} onStateChange={handleChangeState} />
       <WeatherSearch
+        setOpenCardWeather={setOpenCardWeather}
         statesList={statesList}
         citysList={citysList}
+        setLoadingWeatherCall={setLoadingWeatherCall}
         setCityName={setCityName}
         setCopyCitysList={setCopyCitysList}
         setCitysSugestions={setCitysSugestions}
