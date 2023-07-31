@@ -6,7 +6,6 @@ interface CardWeatherProps {
   weatherData: WeatherData;
   abreviationState: string;
   setOpenCardWeather: (arg: boolean) => void;
-  openCardWeather: boolean;
   countryName: string;
   cityName: string;
 }
@@ -14,7 +13,6 @@ interface CardWeatherProps {
 const CardWeather = ({
   weatherData,
   setOpenCardWeather,
-  openCardWeather,
   cityName,
   abreviationState,
   countryName,

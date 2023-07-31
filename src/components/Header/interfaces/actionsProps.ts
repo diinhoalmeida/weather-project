@@ -12,13 +12,16 @@ export interface HandleWeatherByCityProps {
 
 export interface HandleSelectCityWithClick {
   citySelected: string;
+  setSelectedItemIndex: (arg: number) => void;
   setCityName: (arg: string) => void;
 }
 
 export interface HandleKeyDownProps {
   event: KeyboardEvent<HTMLInputElement>;
   selectedItemIndex: number;
+  setLoadingWeatherCall: (arg: boolean) => void;
   setCitysSugestions: (value: boolean) => void;
+  setOpenCardWeather: (value: boolean) => void;
   setSelectedItemIndex: Dispatch<React.SetStateAction<number>>;
   copyCitysList: GeonameProps[];
   setCityName: (cityName: string) => void;
