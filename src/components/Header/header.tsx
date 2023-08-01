@@ -74,6 +74,7 @@ function Header() {
     setAbreviationState(stateSelected.adminCodes1.ISO3166_2);
     setCountryName(stateSelected.countryName);
     const stateName = event.target.options[selectedIndex].text;
+    setCityName("");
     setCitysSugestions(false);
     setOpenCardWeather(false);
     setStateName(stateName);
