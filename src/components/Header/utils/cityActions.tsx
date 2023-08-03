@@ -24,6 +24,7 @@ export const handleWeatherByCity = ({
   setCityName,
   setCitysSugestions,
   setCopyCitysList,
+  setCountryName,
 }: HandleWeatherByCityProps): void => {
   const cityName = event.target.value;
   setCityName(cityName);
@@ -65,6 +66,8 @@ export const handleKeyDown = async ({
   cityName,
   countryName,
   stateName,
+  setCountryName,
+  setAbreviationState,
   setLoadingWeatherCall,
   handleWeatherData,
   setWeatherData,
@@ -95,11 +98,19 @@ export const handleKeyDown = async ({
     } else {
       setLoadingWeatherCall(true);
       const weatherCall = await handleWeatherData(
-        `${cityName} ${countryName} ${stateName ? stateName : ""}`
-      ).then((weatherCallReturn) => {
-        setLoadingWeatherCall(false);
-        return weatherCallReturn;
-      });
+        `${cityName} ${stateName ? stateName : ""}`
+      )
+        .then((weatherCallReturn) => {
+          setCityName(weatherCallReturn.location.name);
+          setCountryName(weatherCallReturn.location.country);
+          setAbreviationState(weatherCallReturn.location.region);
+          return weatherCallReturn;
+        })
+        .then((lastReturnPromiseWeatherCall) => {
+          setSelectedItemIndex(-1);
+          setLoadingWeatherCall(false);
+          return lastReturnPromiseWeatherCall;
+        });
       setOpenCardWeather(true);
       setWeatherData(weatherCall);
     }

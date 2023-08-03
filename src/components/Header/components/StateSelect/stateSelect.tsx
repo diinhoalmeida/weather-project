@@ -16,8 +16,8 @@ function stateSelect({ statesList, onStateChange }: StateSelectProps) {
       bgColor="white"
     >
       {statesList?.map((item, index) => (
-        <option key={index} value={item.geonameId}>
-          {item.name}
+        <option key={index} value={item?.geonameId}>
+          {item?.name}
         </option>
       ))}
     </Select>

@@ -1,5 +1,5 @@
-import { Flex, Text } from "@chakra-ui/react";
-import { AiFillInstagram } from "react-icons/ai";
+import { Flex, Image, Text } from "@chakra-ui/react";
+import BrazilFlag from "../../../../assets/brazil-flag.png";
 
 function WeatherTitle() {
   return (
@@ -13,8 +13,13 @@ function WeatherTitle() {
       gap={2}
     >
       <Text>Previsão do tempo</Text>
-      <Flex>
-        <AiFillInstagram />
+      <Flex w="100%" justifyContent="center">
+        <Image
+          src={BrazilFlag}
+          alt="brazil-flag"
+          width={{ base: "50px", md: "70px" }}
+          style={{ borderRadius: "5px" }}
+        />
       </Flex>
     </Flex>
   );

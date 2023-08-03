@@ -32,6 +32,8 @@ function WeatherSearch({
   setLoadingWeatherCall,
   setCopyCitysList,
   cityName,
+  setCountryName,
+  setAbreviationState,
   selectedItemIndex,
 }: WeatherSearchProps) {
   const listRef = useRef<HTMLUListElement>(null);
@@ -68,6 +70,7 @@ function WeatherSearch({
             onChange={(event) => {
               handleWeatherByCity({
                 event,
+                setCountryName,
                 citysList,
                 setCityName,
                 setCitysSugestions,
@@ -78,6 +81,8 @@ function WeatherSearch({
             onKeyDown={(event) =>
               handleKeyDown({
                 event,
+                setCountryName,
+                setAbreviationState,
                 setLoadingWeatherCall,
                 selectedItemIndex,
                 setCitysSugestions,
