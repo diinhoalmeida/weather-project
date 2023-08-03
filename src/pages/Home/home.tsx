@@ -5,10 +5,13 @@ import { useState, useEffect, useRef } from "react";
 import { WeatherData } from "../../interfaces/weatherApi";
 import { fetchWeatherDataForCapitals } from "../../utils/weatherForCapitals";
 import WeatherListLoading from "../../components/WeatherListLoading/weatherListLoading";
+import AnimatedAlert from "../../components/Alerts/alerts";
 
 function Home() {
   const [braziliarCapitalsWeatherData, setBrazilianCapitalsWeatherData] =
     useState<WeatherData[]>([]);
+  const [show, setShow] = useState<boolean>(false);
+  const [type, setType] = useState<"success" | "error">();
   const [statesLength, setStatesLength] = useState<number>(
     brazilianCapitals.length
   );
@@ -24,8 +27,9 @@ function Home() {
       setBrazilianCapitalsWeatherData,
     })
       .then(() => setWeatherCapitalsLoading(false))
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        setType("error");
+        alertsApiReturn();
         setWeatherCapitalsLoading(false);
       });
     function updateWindowWidth() {
@@ -39,6 +43,14 @@ function Home() {
       window.removeEventListener("resize", updateWindowWidth);
     };
   }, []);
+
+  const alertsApiReturn = () => {
+    setShow(true);
+    const timeout = setTimeout(() => {
+      setShow(false);
+    }, 1500); // 3 segundos para a animação de saída
+    return () => clearTimeout(timeout);
+  };
 
   return (
     <Flex
@@ -56,7 +68,7 @@ function Home() {
         h="100%"
         justifyContent="space-between"
       >
-        <Header />
+        <Header setType={setType} alertsApiReturn={alertsApiReturn} />
         <Flex flexDirection="column" width={{ base: "full", md: "95%" }}>
           <Text fontWeight="bold" color="whiteAlpha.900" fontSize="4xl">
             Capitais
@@ -91,6 +103,7 @@ function Home() {
           )}
         </Flex>
       </Flex>
+      <AnimatedAlert type={type} show={show} />
     </Flex>
   );
 }

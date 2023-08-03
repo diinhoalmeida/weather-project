@@ -9,7 +9,12 @@ import { StateSelect, WeatherSearch, WeatherTitle } from "./components";
 import { WeatherData } from "../../interfaces/weatherApi";
 import { loadStatesByCountry } from "./utils/stateActions";
 
-function Header() {
+interface HeaderProps {
+  setType: (arg: "success" | "error") => void;
+  alertsApiReturn: () => void;
+}
+
+function Header({ setType, alertsApiReturn }: HeaderProps) {
   const [selectedItemIndex, setSelectedItemIndex] = useState<number>(-1);
   const [statesList, setStatesList] = useState<GeonameProps[]>([]);
   const [citysList, setCitysList] = useState<GeonameProps[]>([]);
@@ -41,9 +46,13 @@ function Header() {
       handleLoadCitysByState()
         .then(() => {
           setLoadingWeatherCall(false);
+          setType("success");
+          alertsApiReturn();
           // Tratamento em caso de sucesso
         })
         .catch((error) => {
+          setType("error");
+          alertsApiReturn();
           console.error(error);
         });
       return;
@@ -94,6 +103,8 @@ function Header() {
         setCityName(weatherCallReturn.location.name);
         setCountryName(weatherCallReturn.location.country);
         setAbreviationState(weatherCallReturn.location.region);
+        setType("success");
+        alertsApiReturn();
         return weatherCallReturn;
       })
       .then((weatherCallReturnReturn) => {
@@ -101,6 +112,12 @@ function Header() {
         setLoadingWeatherCall(false);
         setCitysSugestions(false);
         setOpenCardWeather(true);
+      })
+      .catch(() => {
+        setType("error");
+        alertsApiReturn();
+        setLoadingWeatherCall(false);
+        setCitysSugestions(false);
       });
   };
 
