@@ -24,7 +24,6 @@ export const handleWeatherByCity = ({
   setCityName,
   setCitysSugestions,
   setCopyCitysList,
-  setCountryName,
 }: HandleWeatherByCityProps): void => {
   const cityName = event.target.value;
   setCityName(cityName);
@@ -64,7 +63,6 @@ export const handleKeyDown = async ({
   setOpenCardWeather,
   handleSelectCityWithClick,
   cityName,
-  countryName,
   stateName,
   setCountryName,
   setAbreviationState,
