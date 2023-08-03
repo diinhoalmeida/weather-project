@@ -1,16 +1,21 @@
 import { Flex, Text } from "@chakra-ui/react";
 
-const WeatherInfo = () => {
+interface WeatherInfoProps {
+  humidity: number;
+  feelsLike: number;
+}
+
+const WeatherInfo = ({ humidity, feelsLike }: WeatherInfoProps) => {
   return (
     <>
-      <Flex flexDirection="row" gap={8}>
+      <Flex flexDirection="column">
         <Flex flexDirection="row" gap={0.5}>
-          <Text fontWeight="light">Vento</Text>
-          <Text fontWeight="semibold">18km/h</Text>
+          <Text fontWeight="light">Sensação</Text>
+          <Text fontWeight="semibold">{Math.floor(feelsLike)}ºC</Text>
         </Flex>
         <Flex flexDirection="row" gap={0.5}>
           <Text fontWeight="light">Humidade</Text>
-          <Text fontWeight="semibold">89%</Text>
+          <Text fontWeight="semibold">{`${Math.floor(humidity)}%`}</Text>
         </Flex>
       </Flex>
     </>

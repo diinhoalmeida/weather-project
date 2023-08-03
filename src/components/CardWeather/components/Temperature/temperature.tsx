@@ -1,29 +1,30 @@
 import { Flex, Text } from "@chakra-ui/react";
 import { AiOutlineArrowDown, AiOutlineArrowUp } from "react-icons/ai";
 
-const Temperature = () => {
+interface TemperatureProps {
+  minTemp: number;
+  maxTemp: number;
+  windVelocity: number;
+}
+
+const Temperature = ({ minTemp, maxTemp, windVelocity }: TemperatureProps) => {
   return (
-    <>
-      <Text fontWeight="semibold" mb="10px" fontSize="3xl">
-        20ºC NUBLADO
-      </Text>
-      <Flex flexDirection="row" gap={8}>
-        <Flex flexDirection="row" gap={4}>
-          <Flex flexDirection="row" alignItems="center">
-            <AiOutlineArrowUp style={{ color: "#FF9A00" }} />
-            <Text fontWeight="semibold">16º</Text>
-          </Flex>
-          <Flex flexDirection="row" alignItems="center">
-            <AiOutlineArrowDown style={{ color: "#FF9A00" }} />
-            <Text fontWeight="semibold">16º</Text>
-          </Flex>
+    <Flex flexDirection="column">
+      <Flex flexDirection="row" gap={2}>
+        <Flex flexDirection="row" alignItems="center">
+          <AiOutlineArrowDown style={{ color: "#FF9A00" }} />
+          <Text fontWeight="semibold">{Math.floor(minTemp)}º</Text>
         </Flex>
-        <Flex flexDirection="row" gap={0.5}>
-          <Text fontWeight="light">Sensação</Text>
-          <Text fontWeight="semibold">19ºC</Text>
+        <Flex flexDirection="row" alignItems="center">
+          <AiOutlineArrowUp style={{ color: "#FF9A00" }} />
+          <Text fontWeight="semibold">{Math.floor(maxTemp)}º</Text>
         </Flex>
       </Flex>
-    </>
+      <Flex flexDirection="row" gap={0.5}>
+        <Text fontWeight="light">Vento</Text>
+        <Text fontWeight="semibold">{`${windVelocity}km/h`}</Text>
+      </Flex>
+    </Flex>
   );
 };
 
