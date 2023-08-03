@@ -69,28 +69,39 @@ function Header() {
     setStateGeonameId(Number(selectedGeonameId));
     const selectedIndex = event.target.selectedIndex;
     const stateSelected = statesList.filter(
-      (item) => item.adminName1 === event.target.options[selectedIndex].text
+      (item) => item?.adminName1 === event.target.options[selectedIndex].text
     )[0];
-    setAbreviationState(stateSelected.adminCodes1.ISO3166_2);
-    setCountryName(stateSelected.countryName);
+    setAbreviationState(stateSelected?.adminCodes1?.ISO3166_2);
+    setCountryName(stateSelected?.countryName);
     const stateName = event.target.options[selectedIndex].text;
     setCityName("");
     setCitysSugestions(false);
     setOpenCardWeather(false);
-    setStateName(stateName);
+    if (event.target.value === "") {
+      setStateName("");
+      setCopyCitysList([]);
+      setCitysList([]);
+    } else {
+      setStateName(stateName);
+    }
   };
 
   const handleSubmitWeatherData = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoadingWeatherCall(true);
-    await handleWeatherData(
-      `${cityName} ${countryName} ${stateName ? stateName : ""}`
-    ).then((weatherCallReturn) => {
-      setLoadingWeatherCall(false);
-      setCitysSugestions(false);
-      setOpenCardWeather(true);
-      setWeatherData(weatherCallReturn);
-    });
+    await handleWeatherData(`${cityName} ${stateName ? stateName : ""}`)
+      .then((weatherCallReturn) => {
+        setCityName(weatherCallReturn.location.name);
+        setCountryName(weatherCallReturn.location.country);
+        setAbreviationState(weatherCallReturn.location.region);
+        return weatherCallReturn;
+      })
+      .then((weatherCallReturnReturn) => {
+        setWeatherData(weatherCallReturnReturn);
+        setLoadingWeatherCall(false);
+        setCitysSugestions(false);
+        setOpenCardWeather(true);
+      });
   };
 
   return (
@@ -117,6 +128,8 @@ function Header() {
       <StateSelect statesList={statesList} onStateChange={handleChangeState} />
       <WeatherSearch
         setOpenCardWeather={setOpenCardWeather}
+        setCountryName={setCountryName}
+        setAbreviationState={setAbreviationState}
         statesList={statesList}
         citysList={citysList}
         setLoadingWeatherCall={setLoadingWeatherCall}

@@ -4,6 +4,8 @@ import { WeatherData } from "../../../interfaces/weatherApi";
 
 export interface WeatherSearchProps {
   statesList: GeonameProps[];
+  setCountryName: (arg: string) => void;
+  setAbreviationState: (arg: string) => void;
   citysList: GeonameProps[];
   setCopyCitysList: (arg: GeonameProps[]) => void;
   onCitySubmit: (event: FormEvent<HTMLFormElement>) => void;

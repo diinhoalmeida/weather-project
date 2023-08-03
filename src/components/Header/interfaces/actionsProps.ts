@@ -6,6 +6,7 @@ export interface HandleWeatherByCityProps {
   event: ChangeEvent<HTMLInputElement>;
   citysList: GeonameProps[];
   setCityName: (arg: string) => void;
+  setCountryName: (arg: string) => void;
   setCitysSugestions: (arg: boolean) => void;
   setCopyCitysList: (arg: GeonameProps[]) => void;
 }
@@ -18,6 +19,8 @@ export interface HandleSelectCityWithClick {
 
 export interface HandleKeyDownProps {
   event: KeyboardEvent<HTMLInputElement>;
+  setCountryName: (arg: string) => void;
+  setAbreviationState: (arg: string) => void;
   selectedItemIndex: number;
   setLoadingWeatherCall: (arg: boolean) => void;
   setCitysSugestions: (value: boolean) => void;
