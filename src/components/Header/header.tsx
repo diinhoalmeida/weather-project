@@ -31,6 +31,7 @@ function Header({ setType, alertsApiReturn }: HeaderProps) {
   const [loadingWeatherCall, setLoadingWeatherCall] = useState<boolean>(false);
 
   useEffect(() => {
+    setCountryGeonameId(3469034);
     loadStatesByCountry(countryGeonameId)
       .then((statesListFromApi) => {
         setStatesList(statesListFromApi);

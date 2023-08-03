@@ -21,6 +21,7 @@ function Home() {
   const flexRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    setStatesLength(brazilianCapitals.length);
     setWeatherCapitalsLoading(true);
     fetchWeatherDataForCapitals({
       brazilianCapitals,

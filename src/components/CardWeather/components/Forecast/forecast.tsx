@@ -1,4 +1,4 @@
-import { Box, Flex, Grid } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import ForecastItem from "../ForecastItem/forecastItem";
 import { ForecastDayPropsArrayProps } from "../../../../interfaces/weatherApi";
 import { formatDateToDDMM } from "../../../../utils/dateFormat";
