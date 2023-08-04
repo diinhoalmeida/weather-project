@@ -9,7 +9,7 @@ const handleLocationsByGeonameId = async (
 ): Promise<GeonameProps[]> => {
   const options = {
     method: "GET",
-    url: `http://www.geonames.org/childrenJSON?geonameId=${geonameId}`,
+    url: `https://www.geonames.org/childrenJSON?geonameId=${geonameId}`,
   };
 
   try {
