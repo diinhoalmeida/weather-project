@@ -7,7 +7,7 @@ const handleWeatherData = async (
   console.log("oi", citySelected);
   const options = {
     method: "GET",
-    url: "http://api.weatherapi.com/v1/forecast.json?key=bed0d7cb6f574708b6e140054232007",
+    url: "https://api.weatherapi.com/v1/forecast.json?key=bed0d7cb6f574708b6e140054232007",
     params: {
       q: citySelected,
       days: 14,
