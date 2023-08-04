@@ -67,6 +67,8 @@ export const handleKeyDown = async ({
   setCountryName,
   setAbreviationState,
   setLoadingWeatherCall,
+  setType,
+  alertsApiReturn,
   handleWeatherData,
   setWeatherData,
 }: HandleKeyDownProps): Promise<void> => {
@@ -95,22 +97,26 @@ export const handleKeyDown = async ({
       });
     } else {
       setLoadingWeatherCall(true);
-      const weatherCall = await handleWeatherData(
-        `${cityName} ${stateName ? stateName : ""}`
-      )
+      await handleWeatherData(`${cityName} ${stateName ? stateName : ""}`)
         .then((weatherCallReturn) => {
           setCityName(weatherCallReturn.location.name);
           setCountryName(weatherCallReturn.location.country);
           setAbreviationState(weatherCallReturn.location.region);
+          setType("success");
+          alertsApiReturn();
           return weatherCallReturn;
         })
         .then((lastReturnPromiseWeatherCall) => {
           setSelectedItemIndex(-1);
           setLoadingWeatherCall(false);
-          return lastReturnPromiseWeatherCall;
+          setOpenCardWeather(true);
+          setWeatherData(lastReturnPromiseWeatherCall);
+        })
+        .catch(() => {
+          setType("error");
+          setLoadingWeatherCall(false);
+          alertsApiReturn();
         });
-      setOpenCardWeather(true);
-      setWeatherData(weatherCall);
     }
   }
 };

@@ -49,7 +49,7 @@ function Home() {
     setShow(true);
     const timeout = setTimeout(() => {
       setShow(false);
-    }, 1500); // 3 segundos para a animação de saída
+    }, 1500);
     return () => clearTimeout(timeout);
   };
 

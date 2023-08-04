@@ -66,7 +66,6 @@ function Header({ setType, alertsApiReturn }: HeaderProps) {
     const listCityByState = await handleLocationsByGeonameId(
       stateGeonameId
     ).then((listCityByStateReturn) => {
-      console.log("entrou na cidade");
       setLoadingWeatherCall(false);
       return listCityByStateReturn;
     });
@@ -145,6 +144,8 @@ function Header({ setType, alertsApiReturn }: HeaderProps) {
       )}
       <StateSelect statesList={statesList} onStateChange={handleChangeState} />
       <WeatherSearch
+        setType={setType}
+        alertsApiReturn={alertsApiReturn}
         setOpenCardWeather={setOpenCardWeather}
         setCountryName={setCountryName}
         setAbreviationState={setAbreviationState}

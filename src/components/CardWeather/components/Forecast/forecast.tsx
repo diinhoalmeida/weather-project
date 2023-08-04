@@ -27,7 +27,6 @@ const Forecast = ({ forecastDay }: ForecastProps) => {
       minTemp: item.day.mintemp_c,
       maxTemp: item.day.maxtemp_c,
     }));
-    console.log("q", forecastDataMolded);
     setForecastData(forecastDataMolded);
   };
 
