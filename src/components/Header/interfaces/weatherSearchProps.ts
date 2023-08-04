@@ -21,4 +21,6 @@ export interface WeatherSearchProps {
   setSelectedItemIndex: Dispatch<React.SetStateAction<number>>;
   copyCitysList: GeonameProps[];
   setWeatherData: (arg: WeatherData) => void;
+  setType: (arg: "success" | "error") => void;
+  alertsApiReturn: () => void;
 }

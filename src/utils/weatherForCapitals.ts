@@ -15,7 +15,6 @@ export const fetchWeatherDataForCapitals = ({
       const weatherData = await handleWeatherData(capitalInfo.capital);
       return weatherData;
     } catch (error) {
-      console.error(`Error fetching weather data for ${capitalInfo.capital}`);
       return null;
     }
   });
@@ -26,7 +25,7 @@ export const fetchWeatherDataForCapitals = ({
         weatherDataPromisesResults as WeatherData[]
       );
     })
-    .catch((err) => {
-      console.log(err);
+    .catch(() => {
+      throw new Error("Failed to fetch weather data");
     });
 };
