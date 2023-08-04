@@ -1,15 +1,15 @@
 import axios, { AxiosResponse } from "axios";
 import { WeatherData } from "../interfaces/weatherApi";
+import { normalizeWord } from "../utils/normalizeWord";
 
 const handleWeatherData = async (
   citySelected: string
 ): Promise<WeatherData> => {
-  console.log("oi", citySelected);
   const options = {
     method: "GET",
     url: "https://api.weatherapi.com/v1/forecast.json?key=bed0d7cb6f574708b6e140054232007",
     params: {
-      q: citySelected,
+      q: normalizeWord(citySelected),
       days: 14,
       aqi: "no",
       alerts: "no",
@@ -23,7 +23,6 @@ const handleWeatherData = async (
 
   try {
     const response: AxiosResponse<WeatherData> = await axios.request(options);
-    console.log("sa", response.data);
     return response.data;
   } catch (error) {
     throw new Error("Failed to fetch weather data");

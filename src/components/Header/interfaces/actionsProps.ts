@@ -37,4 +37,6 @@ export interface HandleKeyDownProps {
   stateName: string;
   handleWeatherData: (query: string) => Promise<WeatherData>;
   setWeatherData: (weatherData: WeatherData) => void;
+  setType: (arg: "success" | "error") => void;
+  alertsApiReturn: () => void;
 }

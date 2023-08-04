@@ -15,7 +15,6 @@ const handleLocationsByGeonameId = async (
   try {
     const response: AxiosResponse<GeoNameResponseCountryForStates> =
       await axios.request(options);
-    console.log(response.data.geonames);
     return response.data.geonames;
   } catch (error) {
     console.error(error);
