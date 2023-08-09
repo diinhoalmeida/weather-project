@@ -1,0 +1,9 @@
+{
+  "manifest_version": 2,
+  "name": "Previsao do Tempo",
+  "version": "1.0",
+  "web_accessible_resources": [
+    "media/webFonts/opensans/*",
+    "media/webFonts/SofiaPro*/*"
+  ]
+}
