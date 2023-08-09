@@ -4,10 +4,11 @@ Bem-vindo à documentação do site de Previsão do Tempo. Nesta documentação,
 
 ## Visão Geral
 
-## Teste de Compatibilidade com Dispositivos Móveis:
-https://search.google.com/test/mobile-friendly/result?id=MyohD6POpQnBuCrSTXFneQ
-
 O site de Previsão do Tempo permite que os usuários verifiquem as condições climáticas de diferentes cidades. A pesquisa pode ser feita para qualquer local, mas a facilitação fornecida é específica para cidades no Brasil.
+
+## Teste de Compatibilidade com Dispositivos Móveis:
+
+https://search.google.com/test/mobile-friendly/result?id=MyohD6POpQnBuCrSTXFneQ
 
 ### Funcionalidades Principais
 
